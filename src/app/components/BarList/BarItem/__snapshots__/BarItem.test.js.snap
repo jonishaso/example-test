@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test BarItem 1`] = `
+<li>
+  <styled.div>
+    <styled.span
+      progress={90}
+    >
+      90%
+    </styled.span>
+  </styled.div>
+</li>
+`;

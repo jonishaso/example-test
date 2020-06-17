@@ -1,0 +1,61 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "dependencies": {
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
+    "axios": "^0.19.0",
+    "lodash": "^4.17.15",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "styled-components": "^5.1.1"
+  },
+  "scripts": {
+    "test": "eslint \"src/**/*.js\" && jest -c ./jest.config.json",
+    "start": "parcel ./src/index.html"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/polyfill": "^7.7.0",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "@testing-library/react": "~9.3.2",
+    "@testing-library/user-event": "~7.1.2",
+    "babel-eslint": "~10.1.0",
+    "babel-jest": "^24.9.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.3",
+    "eslint": "~7.0.0",
+    "eslint-config-prettier": "~6.11.0",
+    "eslint-plugin-prettier": "~3.1.3",
+    "eslint-plugin-react": "~7.20.0",
+    "eslint-plugin-sort-destructure-keys": "~1.3.4",
+    "jest": "^24.9.0",
+    "jest-css-modules": "^2.1.0",
+    "jest-mock-now": "^1.3.0",
+    "parcel-bundler": "~1.12.4",
+    "prettier": "^1.19.1",
+    "react-test-renderer": "^16.12.0"
+  },
+  "alias": {
+    "#helper": "./src/helper"
+  },
+  "main": "index.js",
+  "license": "MIT"
+}
