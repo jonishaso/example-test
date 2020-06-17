@@ -43,7 +43,7 @@ const App = () => {
   const [details, setDetails] = useState(null)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  useEffect(async () => {
+  useEffect(() => {
     init()
   }, [])
 
