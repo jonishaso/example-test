@@ -7,7 +7,7 @@ const StyledList = Styled.ul`
   list-style: none;
   margin: 20px auto;
   padding-inline-start: 0;
-  width: 80%;
+  width: 60%;
 `
 
 const BarList = ({ barsValues, selectedIndex }) => {

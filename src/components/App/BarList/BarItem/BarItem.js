@@ -9,7 +9,7 @@ const StyledBar = styled.div`
   margin: 15px auto;
   padding: 2px;
   position: relative;
-  width: 80%;
+  width: 100%;
 `
 const StyledSpan = styled.span`
   background-color: ${props => (props.progress >= 100 ? '#ff3d00' : '#64b5f6')};
@@ -33,7 +33,7 @@ const StyledSpan = styled.span`
 `
 
 const StyledText = styled.p`
-  bottom: 0;
+  bottom: 7px;
   font-family: 'Work Sans', sans-serif;
   font-size: 16px;
   margin: 0;

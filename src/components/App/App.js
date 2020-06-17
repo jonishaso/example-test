@@ -22,6 +22,7 @@ const StyledTitle = styled.h2`
 const StyledActionContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   margin: 10px auto;
   width: 60%;
 `
