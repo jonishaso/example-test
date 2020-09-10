@@ -22,7 +22,7 @@ const ButtonList = ({ btnValue, handleClick }) => {
       {value > 0 ? `+${value}` : value}
     </StyledBtn>
   ))
-  return <div>{items}</div>
+  return <div id="button-list">{items}</div>
 }
 
 export default ButtonList

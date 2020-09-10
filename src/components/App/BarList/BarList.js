@@ -12,7 +12,12 @@ const StyledList = Styled.ul`
 
 const BarList = ({ barsValues, selectedIndex }) => {
   const barItems = barsValues.map((value, index) => (
-    <BarItem isSelected={Number(selectedIndex) === index} key={index} progress={value} />
+    <BarItem
+      id={`bar-item-${index}`}
+      isSelected={Number(selectedIndex) === index}
+      key={index}
+      progress={value}
+    />
   ))
   return <StyledList>{barItems}</StyledList>
 }

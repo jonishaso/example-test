@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`test Category Buttons 1`] = `
-<div>
+<div
+  id="button-list"
+>
   <styled.button
     key="0"
     onClick={[Function]}
@@ -12,19 +14,19 @@ exports[`test Category Buttons 1`] = `
     key="1"
     onClick={[Function]}
   >
-    45
+    +45
   </styled.button>
   <styled.button
     key="2"
     onClick={[Function]}
   >
-    89
+    +89
   </styled.button>
   <styled.button
     key="3"
     onClick={[Function]}
   >
-    1
+    +1
   </styled.button>
 </div>
 `;

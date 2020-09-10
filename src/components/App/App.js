@@ -14,11 +14,13 @@ const StyledContainer = styled.div`
   min-width: 350px;
   width: 80vw;
 `
+
 const StyledTitle = styled.h2`
   color: #424242;
   font-family: 'Sriracha', cursive;
   font-size: 40px;
 `
+
 const StyledActionContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
@@ -39,18 +41,16 @@ const StyledSelect = styled.select`
   padding: 0.3em 0.8em;
   width: 120px;
 `
+
 const App = () => {
   const [details, setDetails] = useState(null)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   useEffect(() => {
-    init()
+    fetchData().then(data => {
+      setDetails(data)
+    })
   }, [])
-
-  const init = async () => {
-    const data = await fetchData()
-    setDetails(data)
-  }
 
   const handleBtnClick = btnValue => {
     let newValue = details.bars[selectedIndex] + btnValue
@@ -78,7 +78,7 @@ const App = () => {
       <StyledTitle>Progress Bars</StyledTitle>
       <BarList
         barsValues={details.bars.map(value =>
-          Number.parseFloat((value / details.limit) * 100).toFixed(2)
+          Number.parseFloat((value / details.limit) * 100).toFixed(2),
         )}
         selectedIndex={selectedIndex}
       />
