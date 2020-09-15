@@ -9,7 +9,7 @@
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "test": "eslint \"src/**/*.js\" && jest -c ./jest.config.json --coverage",
+    "test": "eslint \"src/**/*.js\" --fix && jest -c ./jest.config.json --coverage",
     "start": "parcel ./src/index.html"
   },
   "eslintConfig": {

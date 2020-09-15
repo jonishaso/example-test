@@ -2,7 +2,7 @@ import BarList from './BarList'
 import ButtonList from './ButtonList'
 import fetchData from '#helper/api'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 
 const StyledContainer = styled.div`
@@ -43,50 +43,66 @@ const StyledSelect = styled.select`
 `
 
 const App = () => {
-  const [details, setDetails] = useState(null)
+  // const [details, setDetails] = useState(null)
+  const [bars, setBars] = useState(null)
+  const [btnVals, setBtnVals] = useState(null)
+  const [limit, setLimit] = useState(NaN)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   useEffect(() => {
-    fetchData().then(data => {
-      setDetails(data)
-    })
+    fetchData()
+      .then(data => {
+        const { bars, buttons, limit } = data
+        console.log(bars)
+        setBtnVals(buttons)
+        setBars(bars)
+        setLimit(limit)
+      })
+      .catch(err => console.log(err))
   }, [])
 
-  const handleBtnClick = btnValue => {
-    let newValue = details.bars[selectedIndex] + btnValue
+  const handleBtnClick = useCallback(btnValue => {
+    let newValue = bars[selectedIndex] + btnValue
     if (newValue < 0) newValue = 0
-    const copyOfBars = [...details.bars]
+    const copyOfBars = [...bars]
     copyOfBars.splice(selectedIndex, 1, newValue)
-    setDetails({ ...details, bars: copyOfBars })
-  }
-  const handleSelect = event => setSelectedIndex(event.target.value)
+    setBars(copyOfBars)
+  })
+  const handleSelect = useCallback(event =>
+    setSelectedIndex(event.target.value),
+  )
 
-  if (!details)
+  const options = useMemo(
+    () => (!bars ? [] : bars.map((_, index) => `Bar ${index + 1}`)),
+    [bars],
+  )
+  if (!bars)
     return (
       <StyledContainer>
         <StyledTitle>Loading....</StyledTitle>
       </StyledContainer>
     )
 
-  const options = details.bars.map((_, index) => (
-    <option key={index} value={index}>
-      {'Bar ' + (index + 1)}
-    </option>
-  ))
   return (
     <StyledContainer>
       <StyledTitle>Progress Bars</StyledTitle>
       <BarList
-        barsValues={details.bars.map(value =>
-          Number.parseFloat((value / details.limit) * 100).toFixed(2),
+        barsValues={bars.map(value =>
+          Number.parseFloat((value / limit) * 100).toFixed(2),
         )}
         selectedIndex={selectedIndex}
       />
       <StyledActionContainer>
         <StyledSelect onChange={handleSelect} value={selectedIndex}>
-          {options}
+          {options.map((value, index) => {
+            return (
+              <option key={index} value={index}>
+                {value}
+              </option>
+            )
+          })}
         </StyledSelect>
-        <ButtonList btnValue={details.buttons} handleClick={handleBtnClick} />
+        <ButtonList btnValue={btnVals} handleClick={handleBtnClick} />
       </StyledActionContainer>
     </StyledContainer>
   )

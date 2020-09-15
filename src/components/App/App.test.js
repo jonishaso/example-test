@@ -1,5 +1,4 @@
 import React from 'react'
-// import toJson from 'enzyme-to-json'
 import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
 
@@ -14,7 +13,7 @@ jest.mock('#helper/api', () => {
   }
 })
 
-it('bar init status', async () => {
+test('bar init status', async () => {
   const AppComponent = require('./App').default
   let wrapper
   await act(async () => {
@@ -29,7 +28,7 @@ it('bar init status', async () => {
   ).toEqual('50.00%')
 })
 
-it('button click', async () => {
+test('button click', async () => {
   const AppComponent = require('./App').default
   let wrapper
   await act(async () => {
@@ -48,9 +47,8 @@ it('button click', async () => {
       .text(),
   ).toEqual('70.00%')
 })
-// wrapper.find('option').at(0).instance().selected = false;
 
-it('dropdown selection and button click', async () => {
+test('dropdown selection and button click', async () => {
   const AppComponent = require('./App').default
   let wrapper
   await act(async () => {
