@@ -1,8 +1,8 @@
 import BarList from './BarList'
 import ButtonList from './ButtonList'
-import fetchData from '#helper/api'
+import useFetchFData from './helper/useFetchData'
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 
 const StyledContainer = styled.div`
@@ -43,40 +43,54 @@ const StyledSelect = styled.select`
 `
 
 const App = () => {
-  // const [details, setDetails] = useState(null)
-  const [bars, setBars] = useState(null)
-  const [btnVals, setBtnVals] = useState(null)
-  const [limit, setLimit] = useState(NaN)
+  const [
+    barsValues,
+    buttonsValues,
+    loading,
+    limitValue,
+    setBarsValues,
+  ] = useFetchFData(null)
+
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  useEffect(() => {
-    fetchData()
-      .then(data => {
-        const { bars, buttons, limit } = data
-        console.log(bars)
-        setBtnVals(buttons)
-        setBars(bars)
-        setLimit(limit)
-      })
-      .catch(err => console.log(err))
-  }, [])
+  const optionsTags = useMemo(
+    () =>
+      !barsValues ? (
+        <div />
+      ) : (
+        barsValues.map((_, index) => {
+          return (
+            <option key={index} value={index}>
+              {`Bar ${index + 1}`}
+            </option>
+          )
+        })
+      ),
+    [barsValues],
+  )
+  const calculatedBars = useMemo(
+    () =>
+      !barsValues
+        ? []
+        : barsValues.map(value =>
+            Number.parseFloat((value / limitValue) * 100).toFixed(2),
+          ),
+    [barsValues],
+  )
 
   const handleBtnClick = useCallback(btnValue => {
-    let newValue = bars[selectedIndex] + btnValue
+    let newValue = barsValues[selectedIndex] + btnValue
     if (newValue < 0) newValue = 0
-    const copyOfBars = [...bars]
+    const copyOfBars = [...barsValues]
     copyOfBars.splice(selectedIndex, 1, newValue)
-    setBars(copyOfBars)
+    setBarsValues(copyOfBars)
   })
+
   const handleSelect = useCallback(event =>
     setSelectedIndex(event.target.value),
   )
 
-  const options = useMemo(
-    () => (!bars ? [] : bars.map((_, index) => `Bar ${index + 1}`)),
-    [bars],
-  )
-  if (!bars)
+  if (loading)
     return (
       <StyledContainer>
         <StyledTitle>Loading....</StyledTitle>
@@ -86,23 +100,12 @@ const App = () => {
   return (
     <StyledContainer>
       <StyledTitle>Progress Bars</StyledTitle>
-      <BarList
-        barsValues={bars.map(value =>
-          Number.parseFloat((value / limit) * 100).toFixed(2),
-        )}
-        selectedIndex={selectedIndex}
-      />
+      <BarList barsValues={calculatedBars} selectedIndex={selectedIndex} />
       <StyledActionContainer>
         <StyledSelect onChange={handleSelect} value={selectedIndex}>
-          {options.map((value, index) => {
-            return (
-              <option key={index} value={index}>
-                {value}
-              </option>
-            )
-          })}
+          {optionsTags}
         </StyledSelect>
-        <ButtonList btnValue={btnVals} handleClick={handleBtnClick} />
+        <ButtonList btnValue={buttonsValues} handleClick={handleBtnClick} />
       </StyledActionContainer>
     </StyledContainer>
   )

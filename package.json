@@ -6,6 +6,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-test-render": "^1.1.2",
+    "src": "^1.1.2",
     "styled-components": "^5.1.1"
   },
   "scripts": {
@@ -51,7 +52,7 @@
     "react-test-renderer": "^16.12.0"
   },
   "alias": {
-    "#helper": "./src/helper"
+    "#help": "src/components/App/helper"
   },
   "main": "index.js",
   "license": "MIT"

@@ -2,7 +2,7 @@ import React from 'react'
 import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
 
-jest.mock('#helper/api', () => {
+jest.mock('#help/api', () => {
   return {
     __esModule: true,
     default: async () => ({
