@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import fetchData from '#help/api'
+import fetchData from './api'
 
 const useFetchData = () => {
   const [loading, setLoading] = useState(true)

@@ -1,8 +1,9 @@
 import React from 'react'
+const AppComponent = require('./App').default
 import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
 
-jest.mock('#help/api', () => {
+jest.mock('./helper/api', () => {
   return {
     __esModule: true,
     default: async () => ({
@@ -14,7 +15,8 @@ jest.mock('#help/api', () => {
 })
 
 test('bar init status', async () => {
-  const AppComponent = require('./App').default
+  // const fetchData = require('./helper/api').default
+
   let wrapper
   await act(async () => {
     wrapper = mount(<AppComponent />)
@@ -29,7 +31,6 @@ test('bar init status', async () => {
 })
 
 test('button click', async () => {
-  const AppComponent = require('./App').default
   let wrapper
   await act(async () => {
     wrapper = mount(<AppComponent />)
@@ -49,7 +50,6 @@ test('button click', async () => {
 })
 
 test('dropdown selection and button click', async () => {
-  const AppComponent = require('./App').default
   let wrapper
   await act(async () => {
     wrapper = mount(<AppComponent />)
