@@ -17,7 +17,7 @@ const StyledBtn = styled.button`
   }
 `
 const ButtonList = ({ btnValue, handleClick }) => {
-  const items = btnValue.map((value, index) => (
+  const items = btnValue?.map((value, index) => (
     <StyledBtn key={index} onClick={() => handleClick(value)}>
       {value > 0 ? `+${value}` : value}
     </StyledBtn>

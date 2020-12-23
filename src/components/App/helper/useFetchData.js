@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import fetchData from '#help/api'
+import fetchData from 'localHelper/api.js'
 
 const useFetchData = () => {
   const [loading, setLoading] = useState(true)
-  const [, setIsError] = useState(false)
+  const [isError, setIsError] = useState(false)
   const [buttonsValues, setButtonsValues] = useState(null)
   const [limitValue, setLimitValue] = useState(null)
   const [barsValues, setBarsValues] = useState(null)
@@ -17,11 +17,18 @@ const useFetchData = () => {
         setBarsValues(bars)
         setLoading(false)
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
+        setLoading(false)
         setIsError(true)
       })
   }, [])
-  return [barsValues, buttonsValues, loading, limitValue, setBarsValues]
+  return [
+    barsValues,
+    buttonsValues,
+    loading,
+    isError,
+    limitValue,
+    setBarsValues,
+  ]
 }
 export default useFetchData

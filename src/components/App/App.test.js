@@ -1,54 +1,35 @@
 import React from 'react'
+const AppComponent = require('./App').default
 import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
+import fetchData from 'localHelper/api'
 
-jest.mock('#help/api', () => {
-  return {
-    __esModule: true,
-    default: async () => ({
-      bars: [50, 60, 70, 80],
-      buttons: [20, 30, -20, -30],
-      limit: 100,
-    }),
-  }
-})
+jest.mock('localHelper/api', () => jest.fn())
+// beforeEach(() => {
+//   fetchData.mockReturnValue(new Promise(resolve => resolve(MOCK_UP_DATA)))
+// })
 
-test('bar init status', async () => {
-  const AppComponent = require('./App').default
+test('fetch with http error', async () => {
+  fetchData.mockImplementationOnce(() => Promise.reject('wrong fetching'))
+
   let wrapper
   await act(async () => {
     wrapper = mount(<AppComponent />)
   })
   wrapper.update()
-  expect(
-    wrapper
-      .find('ul')
-      .childAt(0)
-      .text(),
-  ).toEqual('50.00%')
+  expect(wrapper.find('h2').text()).toBe('Cannot Fetch data')
 })
 
-test('button click', async () => {
-  const AppComponent = require('./App').default
-  let wrapper
-  await act(async () => {
-    wrapper = mount(<AppComponent />)
-  })
-  wrapper.update()
-  wrapper
-    .find('#button-list')
-    .childAt(0)
-    .simulate('click')
-  // console.log(wrapper.find('#bar-item-0').debug())
-  expect(
-    wrapper
-      .find('ul')
-      .childAt(0)
-      .text(),
-  ).toEqual('70.00%')
-})
-
-test('dropdown selection and button click', async () => {
+it('when figure goes above 100', async () => {
+  fetchData.mockReturnValueOnce(
+    new Promise(resolve =>
+      resolve({
+        bars: [50, 50],
+        buttons: [51, -51],
+        limit: 100,
+      }),
+    ),
+  )
   const AppComponent = require('./App').default
   let wrapper
   await act(async () => {
@@ -56,17 +37,29 @@ test('dropdown selection and button click', async () => {
   })
   wrapper.update()
   wrapper.find('select').simulate('change', { target: { value: '1' } })
-  wrapper.update()
 
   wrapper
     .find('#button-list')
     .childAt(0)
     .simulate('click')
-  console.log(wrapper.find('#bar-item-1').debug())
   expect(
     wrapper
       .find('ul')
       .childAt(1)
       .text(),
-  ).toEqual('80.00%')
+  ).toEqual('101.00%')
+  wrapper
+    .find('#button-list')
+    .childAt(1)
+    .simulate('click')
+  wrapper
+    .find('#button-list')
+    .childAt(1)
+    .simulate('click')
+  expect(
+    wrapper
+      .find('ul')
+      .childAt(1)
+      .text(),
+  ).toEqual('0.00%')
 })
