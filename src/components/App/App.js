@@ -1,6 +1,6 @@
 import BarList from './BarList'
 import ButtonList from './ButtonList'
-import useFetchFData from './helper/useFetchData'
+import useFetchFData from 'localHelper/useFetchData'
 
 import React, { useState, useCallback, useMemo } from 'react'
 import {
@@ -15,6 +15,7 @@ const App = () => {
     barsValues,
     buttonsValues,
     loading,
+    isError,
     limitValue,
     setBarsValues,
   ] = useFetchFData(null)
@@ -24,7 +25,7 @@ const App = () => {
   const optionsTags = useMemo(
     () =>
       !barsValues ? (
-        <div />
+        <option disabled value={'no data'} />
       ) : (
         barsValues.map((_, index) => {
           return (
@@ -57,7 +58,12 @@ const App = () => {
   const handleSelect = useCallback(event =>
     setSelectedIndex(event.target.value),
   )
-
+  if (isError)
+    return (
+      <StyledContainer>
+        <StyledTitle>Cannot Fetch data</StyledTitle>
+      </StyledContainer>
+    )
   if (loading)
     return (
       <StyledContainer>
@@ -73,7 +79,9 @@ const App = () => {
         <StyledSelect onChange={handleSelect} value={selectedIndex}>
           {optionsTags}
         </StyledSelect>
-        <ButtonList btnValue={buttonsValues} handleClick={handleBtnClick} />
+        {buttonsValues?.length > 0 && (
+          <ButtonList btnValue={buttonsValues} handleClick={handleBtnClick} />
+        )}
       </StyledActionContainer>
     </StyledContainer>
   )

@@ -11,7 +11,8 @@
   },
   "scripts": {
     "test": "eslint \"src/**/*.js\" --fix && jest -c ./jest.config.json --coverage",
-    "start": "parcel ./src/index.html"
+    "start": "parcel ./src/index.html",
+    "restart": "rm -rf ./.cache && rm -rf ./.dist && yarn start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -52,7 +53,7 @@
     "react-test-renderer": "^16.12.0"
   },
   "alias": {
-    "#help": "src/components/App/helper"
+    "localHelper": "./src/components/App/helper"
   },
   "main": "index.js",
   "license": "MIT"
