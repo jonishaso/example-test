@@ -2,7 +2,7 @@
   "name": "optus-test",
   "version": "1.0.0",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-test-render": "^1.1.2",
