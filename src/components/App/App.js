@@ -3,23 +3,13 @@ import ButtonList from './ButtonList'
 import useFetchFData from 'localHelper/useFetchData'
 
 import React, { useState, useCallback, useMemo } from 'react'
-import {
-  StyledContainer,
-  StyledTitle,
-  StyledActionContainer,
-  StyledSelect,
-} from './style'
+import { ColorContext, colors } from './context'
+import { StyledContainer, StyledTitle, StyledActionContainer, StyledSelect } from './style'
 
 const App = () => {
-  const [
-    barsValues,
-    buttonsValues,
-    loading,
-    isError,
-    limitValue,
-    setBarsValues,
-  ] = useFetchFData(null)
-
+  const [barsValues, buttonsValues, loading, isError, limitValue, setBarsValues] = useFetchFData(
+    null,
+  )
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const optionsTags = useMemo(
@@ -41,9 +31,7 @@ const App = () => {
     () =>
       !barsValues
         ? []
-        : barsValues.map(value =>
-            Number.parseFloat((value / limitValue) * 100).toFixed(2),
-          ),
+        : barsValues.map(value => Number.parseFloat((value / limitValue) * 100).toFixed(2)),
     [barsValues],
   )
 
@@ -55,9 +43,7 @@ const App = () => {
     setBarsValues(copyOfBars)
   })
 
-  const handleSelect = useCallback(event =>
-    setSelectedIndex(event.target.value),
-  )
+  const handleSelect = useCallback(event => setSelectedIndex(event.target.value))
   if (isError)
     return (
       <StyledContainer>
@@ -72,18 +58,20 @@ const App = () => {
     )
 
   return (
-    <StyledContainer>
-      <StyledTitle>Progress Bars</StyledTitle>
-      <BarList barsValues={calculatedBars} selectedIndex={selectedIndex} />
-      <StyledActionContainer>
-        <StyledSelect onChange={handleSelect} value={selectedIndex}>
-          {optionsTags}
-        </StyledSelect>
-        {buttonsValues?.length > 0 && (
-          <ButtonList btnValue={buttonsValues} handleClick={handleBtnClick} />
-        )}
-      </StyledActionContainer>
-    </StyledContainer>
+    <ColorContext.Provider value={colors}>
+      <StyledContainer>
+        <StyledTitle>Progress Bars</StyledTitle>
+        <BarList barsValues={calculatedBars} selectedIndex={selectedIndex} />
+        <StyledActionContainer>
+          <StyledSelect onChange={handleSelect} value={selectedIndex}>
+            {optionsTags}
+          </StyledSelect>
+          {buttonsValues?.length > 0 && (
+            <ButtonList btnValue={buttonsValues} handleClick={handleBtnClick} />
+          )}
+        </StyledActionContainer>
+      </StyledContainer>
+    </ColorContext.Provider>
   )
 }
 

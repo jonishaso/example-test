@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ColorContext } from '../context'
 import styled from 'styled-components'
 
 const StyledBtn = styled.button`
-  background-color: #64b5f6;
+  background-color: ${props => (props.themeColor ? props.themeColor : '#64b5f6')};
   border: 0;
   border-radius: 4px;
   color: #424242;
@@ -17,12 +18,17 @@ const StyledBtn = styled.button`
   }
 `
 const ButtonList = ({ btnValue, handleClick }) => {
-  const items = btnValue?.map((value, index) => (
-    <StyledBtn key={index} onClick={() => handleClick(value)}>
-      {value > 0 ? `+${value}` : value}
-    </StyledBtn>
-  ))
-  return <div id="button-list">{items}</div>
+  const btnThemeColor = useContext(ColorContext)
+  return (
+    <div id="button-list">
+      {btnValue?.map((value, index) => (
+        <StyledBtn key={index} onClick={() => handleClick(value)}>
+          {value > 0 ? `+${value}` : value}
+        </StyledBtn>
+      ))}
+      <StyledBtn themeColor={btnThemeColor.blue}>Theme Button</StyledBtn>
+    </div>
+  )
 }
 
 export default ButtonList
