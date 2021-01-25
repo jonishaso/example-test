@@ -3,14 +3,15 @@ import ButtonList from './ButtonList'
 import useFetchFData from 'localHelper/useFetchData'
 
 import React, { useState, useCallback, useMemo } from 'react'
-import { ColorContext, colors } from './context'
+import { themeSwitcher } from './context'
 import { StyledContainer, StyledTitle, StyledActionContainer, StyledSelect } from './style'
-
 const App = () => {
   const [barsValues, buttonsValues, loading, isError, limitValue, setBarsValues] = useFetchFData(
     null,
   )
   const [selectedIndex, setSelectedIndex] = useState(0)
+
+  // const [btnThemeColor, setBtnThemeColor] = useState(colors.blue)
 
   const optionsTags = useMemo(
     () =>
@@ -44,12 +45,14 @@ const App = () => {
   })
 
   const handleSelect = useCallback(event => setSelectedIndex(event.target.value))
+
   if (isError)
     return (
       <StyledContainer>
         <StyledTitle>Cannot Fetch data</StyledTitle>
       </StyledContainer>
     )
+
   if (loading)
     return (
       <StyledContainer>
@@ -58,21 +61,19 @@ const App = () => {
     )
 
   return (
-    <ColorContext.Provider value={colors}>
-      <StyledContainer>
-        <StyledTitle>Progress Bars</StyledTitle>
-        <BarList barsValues={calculatedBars} selectedIndex={selectedIndex} />
-        <StyledActionContainer>
-          <StyledSelect onChange={handleSelect} value={selectedIndex}>
-            {optionsTags}
-          </StyledSelect>
-          {buttonsValues?.length > 0 && (
-            <ButtonList btnValue={buttonsValues} handleClick={handleBtnClick} />
-          )}
-        </StyledActionContainer>
-      </StyledContainer>
-    </ColorContext.Provider>
+    <StyledContainer>
+      <StyledTitle>Progress Bars</StyledTitle>
+      <BarList barsValues={calculatedBars} selectedIndex={selectedIndex} />
+      <StyledActionContainer>
+        <StyledSelect onChange={handleSelect} value={selectedIndex}>
+          {optionsTags}
+        </StyledSelect>
+        {buttonsValues?.length > 0 && (
+          <ButtonList btnValue={buttonsValues} handleClick={handleBtnClick} />
+        )}
+      </StyledActionContainer>
+    </StyledContainer>
   )
 }
 
-export default App
+export default themeSwitcher(App)

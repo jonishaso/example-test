@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { ColorContext } from '../context'
 import styled from 'styled-components'
+import { ColorContext, colors } from '../context'
 
-const StyledBtn = styled.button`
+export const StyledBtn = styled.button`
   background-color: ${props => (props.themeColor ? props.themeColor : '#64b5f6')};
   border: 0;
   border-radius: 4px;
@@ -14,11 +14,13 @@ const StyledBtn = styled.button`
   width: 80px;
   text-align: center;
   &:hover {
-    background-color: #bbdefb;
+    background-color: ${props => props.themeColor || '#bbdefb'};
   }
 `
+
 const ButtonList = ({ btnValue, handleClick }) => {
-  const btnThemeColor = useContext(ColorContext)
+  const { btnThemeColor, setBtnThemeColor } = useContext(ColorContext)
+
   return (
     <div id="button-list">
       {btnValue?.map((value, index) => (
@@ -26,7 +28,17 @@ const ButtonList = ({ btnValue, handleClick }) => {
           {value > 0 ? `+${value}` : value}
         </StyledBtn>
       ))}
-      <StyledBtn themeColor={btnThemeColor.blue}>Theme Button</StyledBtn>
+      <StyledBtn
+        onClick={() => {
+          console.log(btnThemeColor)
+          return btnThemeColor === colors.blue
+            ? setBtnThemeColor(colors.red)
+            : setBtnThemeColor(colors.blue)
+        }}
+        themeColor={btnThemeColor}
+      >
+        Theme Button
+      </StyledBtn>
     </div>
   )
 }
