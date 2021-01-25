@@ -22,13 +22,6 @@ const useFetchData = () => {
         setIsError(true)
       })
   }, [])
-  return [
-    barsValues,
-    buttonsValues,
-    loading,
-    isError,
-    limitValue,
-    setBarsValues,
-  ]
+  return [barsValues, buttonsValues, loading, isError, limitValue, setBarsValues]
 }
 export default useFetchData

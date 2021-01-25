@@ -7,7 +7,7 @@ export const colors = {
 
 export const ColorContext = createContext(null)
 
-export const themeSwitcher = Components => props => {
+export const withButtonThemeColorProvider = Components => props => {
   const [btnThemeColor, setBtnThemeColor] = useState(colors.blue)
 
   return (

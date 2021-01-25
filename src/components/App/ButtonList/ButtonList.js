@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { ColorContext, colors } from '../context'
+import { ColorContext, colors } from '../ButtonThemeContext'
 
 export const StyledBtn = styled.button`
   background-color: ${props => (props.themeColor ? props.themeColor : '#64b5f6')};
@@ -29,12 +29,11 @@ const ButtonList = ({ btnValue, handleClick }) => {
         </StyledBtn>
       ))}
       <StyledBtn
-        onClick={() => {
-          console.log(btnThemeColor)
-          return btnThemeColor === colors.blue
+        onClick={() =>
+          btnThemeColor === colors.blue
             ? setBtnThemeColor(colors.red)
             : setBtnThemeColor(colors.blue)
-        }}
+        }
         themeColor={btnThemeColor}
       >
         Theme Button

@@ -3,7 +3,7 @@ import ButtonList from './ButtonList'
 import useFetchFData from 'localHelper/useFetchData'
 
 import React, { useState, useCallback, useMemo } from 'react'
-import { themeSwitcher } from './context'
+import { withButtonThemeColorProvider } from './ButtonThemeContext'
 import { StyledContainer, StyledTitle, StyledActionContainer, StyledSelect } from './style'
 const App = () => {
   const [barsValues, buttonsValues, loading, isError, limitValue, setBarsValues] = useFetchFData(
@@ -76,4 +76,4 @@ const App = () => {
   )
 }
 
-export default themeSwitcher(App)
+export default withButtonThemeColorProvider(App)
