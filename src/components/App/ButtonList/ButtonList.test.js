@@ -17,5 +17,5 @@ test('test Category Buttons', () => {
   debug()
   expect(screen.getAllByRole('button').length).toBe(5)
   fireEvent.click(screen.getByTestId('context-button'))
-  expect(screen.getByTestId('context-button')).toHaveStyle('background-color: #9c0312')
+  expect(screen.getByTestId('context-button')).toHaveStyle('background-color: #9c0312') // not pass
 })
