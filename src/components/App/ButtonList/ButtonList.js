@@ -29,6 +29,7 @@ const ButtonList = ({ btnValue, handleClick }) => {
         </StyledBtn>
       ))}
       <StyledBtn
+        data-testid="context-button"
         onClick={() =>
           btnThemeColor === colors.blue
             ? setBtnThemeColor(colors.red)
